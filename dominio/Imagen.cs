@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    internal class Imagen
+    public class Imagen
     {
         public int id { get; set; }
         public int idArticulo { get; set; }
         public string imgUrl { get; set; }
+
+        public override string ToString()
+        {
+            return imgUrl;
+        }
     }
 }

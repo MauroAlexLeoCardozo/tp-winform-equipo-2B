@@ -10,7 +10,7 @@ namespace Negocio
     public class accesoDatos
     {
         private SqlConnection conexion;
-        private sqlcommand comando;
+        private SqlCommand comando;
         private SqlDataReader lector;
 
         public SqlDataReader Lector
