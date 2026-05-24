@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TPWinForm_equipo_2B
 {
-    public partial class Form1 : Form
+    public partial class frmInicio : Form
     {
-        public Form1()
+        public frmInicio()
         {
             InitializeComponent();
         }

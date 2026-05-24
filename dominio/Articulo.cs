@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace dominio
+{
+    internal class Articulo
+    {
+        public int id { get; set; }
+        public string codigo  { get; set; }
+        public string nombre { get; set; }
+        public string descripcion { get; set; }
+        public Imagen img { get; set; }
+        public Marca marca { get; set; }
+        public Categoria categoria { get; set; }
+        public int precio { get; set; }
+    }
+}
