@@ -19,7 +19,7 @@ namespace Negocio
         }
         public accesoDatos()
         {
-            conexion = new SqlConnection("data source=DESKTOP-9K5QG8P\\SQLEXPRESS; initial catalog=CATALOGO_DB; integrated security=sspi");
+            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=CATALOGO_P3_DB; integrated security=true");
             comando = new SqlCommand();
         }
 
@@ -29,7 +29,7 @@ namespace Negocio
             comando.CommandText = consulta;
         }
 
-       public void ejecutarLectura()
+        public void ejecutarLectura()
         {
             comando.Connection = conexion;
             try
@@ -47,5 +47,6 @@ namespace Negocio
             if (lector != null)
                 lector.Close();
             conexion.Close();
+        }
     }
 }

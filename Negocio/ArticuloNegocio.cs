@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using dominio;
@@ -15,7 +16,7 @@ namespace Negocio
             accesoDatos datos = new accesoDatos();
             try
             {
-                datos.setearConsulta("select A.id, A.codigo, A.nombre, A.descripcion, A.precio, M.descripcion Marca, C.descripcion Categoria, A.idMarca, A.idCategoria from ARTICULOS A, MARCAS M, CATEGORIAS C where M.id = A.idMarca and C.id = A.idCategoria");
+                datos.setearConsulta("WITH PrimeraImagen AS (SELECT idArticulo, ImagenUrl, ROW_NUMBER() OVER (PARTITION BY idArticulo ORDER BY Id) AS rn FROM dbo.IMAGENES) SELECT A.id, A.codigo, A.nombre, A.descripcion, A.precio, M.descripcion Marca, C.descripcion Categoria, A.idMarca, A.idCategoria, PI.ImagenUrl FROM dbo.ARTICULOS A LEFT JOIN dbo.MARCAS M ON M.id = A.idMarca LEFT JOIN dbo.CATEGORIAS C ON C.id = A.idCategoria LEFT JOIN PrimeraImagen PI ON PI.idArticulo = A.id AND PI.rn = 1");
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -25,10 +26,18 @@ namespace Negocio
                     aux.nombre = (string)datos.Lector["nombre"];
                     aux.descripcion = (string)datos.Lector["descripcion"];
                     aux.precio = (decimal)datos.Lector["precio"];
+                    aux.img = new dominio.Imagen();
+                    aux.img.imgUrl = (string)datos.Lector["ImagenUrl"];
                     aux.marca = new dominio.Marca();
                     aux.marca.descripcion = (string)datos.Lector["Marca"];
                     aux.categoria = new dominio.Categoria();
-                    aux.categoria.descripcion = (string)datos.Lector["Categoria"];
+                    if (!(datos.Lector["Categoria"] is DBNull))
+                    {
+                        aux.categoria.descripcion = (string)datos.Lector["Categoria"];
+                    }else
+                    {
+                        aux.categoria.descripcion = "Sin categoria";
+                    }
                     lista.Add(aux);
                 }
                 return lista;
